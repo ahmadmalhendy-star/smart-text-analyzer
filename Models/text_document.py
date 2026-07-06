@@ -11,7 +11,7 @@ class TextDocument:
         self.processed_text = ""
         self.sentences = []     # List of lists (sentences containing words)
         self.wrods = []         # Flat list of all words
-        self.vocaps = {}        # Set of unique words for O(1) lookups
+        self.vocaps = set()     # Set of unique words for O(1) lookups
 
     def updated_text(self,
             new_text: str,
