@@ -40,7 +40,7 @@ def process_document(document: TextDocument) :
         sentences.append(tokenize(sentence))
     words = processed.split()
     vocabs = set(words)
-    document.updated_text(raw_text=document.raw_text,
+    document.updated_text(new_text=document.raw_text,
                           processed_text=processed,
                           sentences=sentences,
                           wrods=words,
