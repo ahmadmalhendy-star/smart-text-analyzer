@@ -49,7 +49,6 @@ def search_in_document (document:TextDocument,query:str) ->str:
             positions = find_word_positions(sentence_word, query)
             result={"sentence_number ":index,
                     "sentence":sentence_text,
-                    "mathces":sentence_text.count(query),
                     "positions":positions
 
 
@@ -72,7 +71,6 @@ def print_search_results(results:list, query:str) ->str:
    for result in results :
        print(f"sentenc number:{result['sentence_number ']}")
        print(f"sentece:{result['sentence']}")
-       print(f"Matches:{result['mathces']}")
        print(f"Word positions:{result['positions']}")
 
 def search_prompt(document: TextDocument) -> None:
