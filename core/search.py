@@ -13,6 +13,25 @@ def clean_search_query(query:str) ->str:
 
     return cleaned 
 
+def find_word_positions(sentence_words: list, query: str) -> list:
+    """
+    Find the word position inside the sentence.
+    Position starts from 1.
+    """
+    positions = []
+
+    query_words = query.split()
+
+    for i in range(len(sentence_words)):
+        if sentence_words[i:i + len(query_words)] == query_words:
+            positions.append(i + 1)
+
+    return positions
+
+
+
+
+
 #search for a word 
 def search_in_document (document:TextDocument,query:str) ->str:
     query=clean_search_query(query)
@@ -27,9 +46,10 @@ def search_in_document (document:TextDocument,query:str) ->str:
     for index,sentence_word in enumerate(document.sentences,start=1):
         sentence_text=" ".join(sentence_word)
         if query in sentence_text:
+            positions = find_word_positions(sentence_word, query)
             result={"sentence_number ":index,
                     "sentence":sentence_text,
-                    "mathces":sentence_text.count(query)
+                    "positions":positions
 
 
          }
@@ -49,9 +69,9 @@ def print_search_results(results:list, query:str) ->str:
    print("-"*40)
 
    for result in results :
-       print(f"sentenc enumber:{result["sentence_number "]}")
-       print(f"sentece:{result["sentence"]}")
-       print(f"Matches:{result["mathces"]}")
+       print(f"sentenc number:{result['sentence_number ']}")
+       print(f"sentece:{result['sentence']}")
+       print(f"Word positions:{result['positions']}")
 
 def search_prompt(document: TextDocument) -> None:
     '''
@@ -73,7 +93,7 @@ def search_prompt(document: TextDocument) -> None:
 from Models.text_document import TextDocument
 from core.text_loader import initial_text_input_prompt
 from core.text_processor import process_document
-from core.search import search_prompt
+
 
 def main():
     raw_text = initial_text_input_prompt()
@@ -90,7 +110,8 @@ def main():
     search_prompt(document)
 
 
-main()
+if __name__=="__main__":
+    main()
 
 
 
