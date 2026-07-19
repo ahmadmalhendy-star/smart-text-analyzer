@@ -43,5 +43,5 @@ def process_document(document: TextDocument) :
     document.updated_text(new_text=document.raw_text,
                           processed_text=processed,
                           sentences=sentences,
-                          wrods=words,
+                          words=words,
                           vocaps=vocabs)

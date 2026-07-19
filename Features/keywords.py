@@ -1,36 +1,20 @@
-class TextProcessor:
-    def __init__(self, text):
-        self.text = text
+def keyword_extraction(text, top_n: int = 5) -> list:
+    """
+    Extracts keywords from the given text using a simple frequency-based approach"""
 
-    def keyword_extraction(self):
-        stop_words = ["the", "is", "a", "an", "and", "or", "to", "of", "in"]
-        words = self.text.split()
-        keywords = []
+    STOP_WORDS = {
+        "the", "a", "an", "and", "or", "but", "is", "are", "was", "were", 
+        "to", "of", "in", "on", "at", "by", "for", "with", "about", "i", 
+        "you", "it", "this", "that", "can", "we", "he", "she", "they", "have"
+    }
 
-        for word in words:
-            if word not in stop_words:
-                keywords.append(word)
+    #  Filter out stop words and count the frequency of remaining words
+    filtered_words = [word.lower() for word in text.split() if word.lower() not in STOP_WORDS]
+    word_freq = {}
+    for word in filtered_words:
+        word_freq[word] = word_freq.get(word, 0) + 1
 
-        printed = []
-        print("\nKeywords:\n")
+    # Sort the words by frequency in descending order and return the top N keywords
+    sorted_keywords = sorted(word_freq.items(), key=lambda item: item[1], reverse=True)
 
-        for word in keywords:
-            if word not in printed:
-                count = 0
-                for w in keywords:
-                    if w == word:
-                        count += 1
-                print(word, ":", count)
-                printed.append(word)
-
-
-
- 
-my_text = input("Enter your text: ")
-
-
-processor = TextProcessor(my_text)
-
-
-processor.keyword_extraction()
-
+    return sorted_keywords[:top_n]
